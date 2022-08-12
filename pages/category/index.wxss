@@ -1,0 +1,25 @@
+@import "./index.skeleton.wxss";
+@import '../common.wxss';
+
+page{
+    background-color: #FFFFFF;
+    height: 100%;
+}
+
+.vtabs-content-item {
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    border-bottom: 1px solid #ccc;
+    /* padding-bottom: 20px; */
+}
+
+.vtabs-content-item .title {
+  line-height: 50px;
+  background-color: rgba(255, 255, 255, 1);
+  text-align: center;
+}
+
+.van-card__title {
+  padding-top: 10px;
+}

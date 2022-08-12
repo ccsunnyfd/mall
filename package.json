@@ -1,0 +1,17 @@
+{
+  "name": "mall",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@miniprogram-component-plus/vtabs": "^1.0.0",
+    "@miniprogram-component-plus/vtabs-content": "^1.0.0",
+    "@vant/weapp": "^1.10.4",
+    "miniprogram-api-promise": "^1.0.4"
+  }
+}

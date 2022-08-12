@@ -1,0 +1,21 @@
+<import src="index.skeleton.wxml"/>
+<template is="skeleton" wx:if="{{loading}}" />
+
+<mp-vtabs vtabs="{{vtabs}}" activeTab="{{activeTab}}" bindtabclick="onTabCLick" bindchange="onChange" class="test" id="category-vtabs" bindscrolltoindexlower="onScrollToIndexLower">
+  <block wx:for="{{vtabs}}" wx:key="title">
+    <mp-vtabs-content id="goods-content{{index}}" tabIndex="{{index}}">
+      <view class="vtabs-content-item">
+        <view class="title">
+          {{item.title}}
+        </view>
+        <view wx:for="{{goodsListMap[item.id].goodsList}}" wx:for-index="index2" wx:for-item="item2" wx:key="id">
+          <van-card data-goodsid="{{item2.id}}" bindtap="onGoodsTap" price="{{item2.startPrice}}" desc="" title="{{item2.goodsName}}" thumb="{{ item2.info.content }}">
+            <view slot="footer">
+              <van-icon size="24px" name="shopping-cart-o" />
+            </view>
+          </van-card>
+        </view>
+      </view>
+    </mp-vtabs-content>
+  </block>
+</mp-vtabs>
