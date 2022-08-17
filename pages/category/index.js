@@ -16,10 +16,13 @@ Page({
     if (categories) categories = categories.data.categories
 
     let vtabs = []
-    for (let j=0; j<categories.length; j++) {
+    for (let j = 0; j < categories.length; j++) {
       let item = categories[j]
       this.getGoodsListByCategory(item.id, j)
-      vtabs.push({title: item.categoryName, id: item.id})
+      vtabs.push({
+        title: item.categoryName,
+        id: item.id
+      })
     }
     this.setData({
       vtabs,
@@ -35,12 +38,15 @@ Page({
 
     if (listMap) {
       if (listMap.metadata) {
-        const {currentPage, lastPage} = listMap.metadata
+        const {
+          currentPage,
+          lastPage
+        } = listMap.metadata
         if (currentPage && lastPage) {
-            // 加载完了, 就不要重复加载了
-            if (currentPage >= lastPage) return
-            pageIndex = currentPage
-            if (loadNextPage) pageIndex++ 
+          // 加载完了, 就不要重复加载了
+          if (currentPage >= lastPage) return
+          pageIndex = currentPage
+          if (loadNextPage) pageIndex++
         }
       }
     }
@@ -101,11 +107,18 @@ Page({
     let res = await wx.wxp.request({
       url: `http://localhost:8000/goods/${goodsid}`
     })
-    console.log(res)
+    if (res && res.data && res.data.goods) {
+      const goodsDetail = res.data.goods
 
-    wx.navigateTo({
-      url: '../goods/index',
-    })
+      wx.navigateTo({
+        url: `../goods/index?goodsid=${goodsid}`,
+        success: function(res) {
+          res.eventChannel.emit('goodsEvent', {
+            data: goodsDetail
+          })
+        }
+      })
+    }
 
     wx.hideLoading()
   }
