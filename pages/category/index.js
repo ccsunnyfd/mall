@@ -11,7 +11,7 @@ Page({
       title: 'Loading...',
     })
     let categories = await wx.wxp.request({
-      url: 'http://localhost:8000/categories',
+      url: 'http://localhost:8000/v1/categories',
     })
     if (categories) categories = categories.data.categories
 
@@ -51,7 +51,7 @@ Page({
       }
     }
     let goodsData = await wx.wxp.request({
-      url: `http://localhost:8000/goods?page=${pageIndex}&page_size=${pageSize}&category_id=${categoryId}`,
+      url: `http://localhost:8000/v1/goods?page=${pageIndex}&page_size=${pageSize}&category_id=${categoryId}`,
     })
     if (goodsData) goodsData = goodsData.data
 
@@ -105,7 +105,7 @@ Page({
     })
 
     let res = await wx.wxp.request({
-      url: `http://localhost:8000/goods/${goodsid}`
+      url: `http://localhost:8000/v1/goods/${goodsid}`
     })
     if (res && res.data && res.data.goods) {
       const goodsDetail = res.data.goods

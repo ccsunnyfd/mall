@@ -93,7 +93,7 @@ Page({
     })
     // 拉取sku规格数据
     const goodsSkuDataRes = await wx.wxp.request({
-      url: `http://localhost:8000/goods/${goodsid}/sku`,
+      url: `http://localhost:8000/v1/goods/${goodsid}/sku`,
     })
     if (goodsSkuDataRes && goodsSkuDataRes.data) {
       const goodsSkuData = goodsSkuDataRes.data

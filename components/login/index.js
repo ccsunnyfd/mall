@@ -27,9 +27,8 @@ Component({
         visible: false
       })
     },
-    async login(e, retryNum = 0) {
+    async login(e) {
       const {
-        userInfo,
         encryptedData,
         iv
       } = e.detail
@@ -43,46 +42,41 @@ Component({
         console.log("err", err);
         sessionIsValid = false
       })
-      console.log("res0", res0);
+
       if (res0 && res0.errMsg === "checkSession:ok") sessionIsValid = true
-      const token = wx.getStorageSync('token')
+      let token = wx.getStorageSync('token')
       if (token) tokenIsValid = true
 
       if (!tokenIsValid || !sessionIsValid) {
         const res1 = await getApp().wxp.login()
-        const {code} = res1
-        // console.log("code", code);
+        const {
+          code
+        } = res1
 
         const res = await getApp().wxp.request({
-          url: `${getApp().wxp.URL_BASE}/user/wexin-login2`,
+          url: `${getApp().wxp.URL_LOGIN}/v1/wx/login`,
           method: 'POST',
           header: {
             'content-type': 'application/json',
-            'Authorization': `Bearer ${token || ''}`
           },
           data: {
             code,
-            userInfo,
             encryptedData,
             iv,
-            sessionKeyIsValid: sessionIsValid
+            sessionIsValid,
           }
         })
 
         if (res.statusCode == 500) {
-          if (retryNum < 3) {
-            this.login.apply(this, [e, ++retryNum])
-          } else {
-            wx.showModal({
-              title: '登录失败',
-              content: '请退出小程序，清空记录并重试',
-            })
-          }
+          wx.showModal({
+            title: '登录失败',
+            content: '请重试',
+          })
           return
         }
-        // Error: Illegal Buffer at WXBizDataCrypt.decryptData
+
         console.log('登录接口请求成功', res.data)
-        token = res.data.data.authorizationToken
+        token = res.data.token
         wx.setStorageSync('token', token)
         console.log('authorization', token)
       }
