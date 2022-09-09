@@ -17,16 +17,16 @@ Page({
   },
 
   // 测试返回对象
-  requestHomeApiByReq4(e){
-    getApp().wxp.requestX({
-      url: 'http://localhost:8000/user/home',
-      onReturnObject(rtn){
-        // rtn.abort()
-      }
-    }).catch(err=>{
-      console.log(err);
-    })
-  },
+  // requestHomeApiByReq4(e){
+  //   getApp().wxp.requestX({
+  //     url: 'http://localhost:8000/user/home',
+  //     onReturnObject(rtn){
+  //       // rtn.abort()
+  //     }
+  //   }).catch(err=>{
+  //     console.log(err);
+  //   })
+  // },
 
   async addToCart(e) {
     if (!this.data.selectedGoodsSkuObject.sku) {
@@ -48,12 +48,12 @@ Page({
       goods_sku_id,
       goods_sku_desc
     }
-    const res = await getApp().wxp.request4({
-      url: 'http://localhost:8000/user/my/carts',
-      method: 'post',
+    const res = await getApp().wxp.requestX({
+      url: 'http://localhost:8000/v1/user/my/cart',
+      method: 'put',
       data
     })
-    if (res.data.msg == 'ok') {
+    if (res.data && res.data.cart && res.data.cart.id) {
       wx.showToast({
         title: '已添加',
       })
@@ -79,7 +79,7 @@ Page({
    */
   onLoad: async function (options) {
     const goodsid = options.goodsid
-    this.data.goodsid = goodsid
+    this.data.goodsId = goodsid
     const eventChannel = this.getOpenerEventChannel()
     eventChannel.on('goodsEvent', (res) => {
       const goodsImages = res.data.infos.filter(item => (item.kind == 0))

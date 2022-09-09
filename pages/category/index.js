@@ -104,7 +104,7 @@ Page({
       title: 'Loading...',
     })
 
-    let res = await wx.wxp.request({
+    const res = await wx.wxp.request({
       url: `http://localhost:8000/v1/goods/${goodsid}`
     })
     if (res && res.data && res.data.goods) {

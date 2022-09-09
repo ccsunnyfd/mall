@@ -54,7 +54,7 @@ Component({
         } = res1
 
         const res = await getApp().wxp.request({
-          url: `${getApp().wxp.URL_LOGIN}/v1/wx/login`,
+          url: `${getApp().wxp.URL_BASE}/v1/wx/login`,
           method: 'POST',
           header: {
             'content-type': 'application/json',
