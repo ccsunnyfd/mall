@@ -10,6 +10,9 @@
     "pages/confirm-order/index",
     "pages/new-address/index"
   ],
+  "requiredPrivateInfos": [
+    "chooseAddress"
+  ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",

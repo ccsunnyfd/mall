@@ -213,7 +213,7 @@ Page({
     })
   },
 
-  // 准备跳转地址列表表，选取地址
+  // 准备跳转地址列表页，选取地址
   toSelectAddress() {
     wx.navigateTo({
       url: '/pages/address-list/index',
