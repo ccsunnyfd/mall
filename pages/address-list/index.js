@@ -16,17 +16,17 @@ Page({
 
   async onSlideButtonTap(e) {
     // e.detail.index是选择按钮的序号
-    let id = e.currentTarget.dataset.id 
-    console.log('slide button tap', e.detail, id)
+    const id = e.currentTarget.dataset.id 
+    // console.log('slide button tap', e.detail, id)
 
-    let res = await wx.wxp.requestX({
+    const res = await wx.wxp.requestX({
       url:`http://localhost:8000/v1/user/my/address/${id}`,
       method:'delete'
     })
-    console.log(res);
-    if (res && res.data.msg == 'ok'){
+    // console.log(res);
+    if (res && res.data.affected > 0){
       // 处理本地数据
-      const {addressList} = this.data
+      let {addressList, selectedAddressId} = this.data
       addressList.some((item, index) => {
         if (item.id == id){
           addressList.splice(index, 1)
@@ -34,8 +34,16 @@ Page({
         }
         return false
       })
+      if (selectedAddressId == id) {
+        selectedAddressId = 0
+        this.setData({
+          addressList,
+          selectedAddressId,
+        })
+        return
+      }
       this.setData({
-        addressList
+        addressList,
       })
     }
   },
@@ -87,6 +95,13 @@ Page({
 
   confirm(e){
     const {selectedAddressId, addressList} = this.data
+    if (selectedAddressId == 0) {
+      wx.showModal({
+        title: '请选择地址',
+        showCancel: false
+      })
+      return
+    }
     const item = addressList.find(item=>item.id == selectedAddressId)
     const opener = this.getOpenerEventChannel()
     opener.emit('selectAddress', item)
