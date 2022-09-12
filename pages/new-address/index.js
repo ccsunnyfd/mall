@@ -41,7 +41,7 @@ Page({
       method,
       data
     })
-    if (res.data && res.data.affected > 0) {
+    if (res.data && res.data.id) {
       const opener = this.getOpenerEventChannel()
       if (!id) data.id = res.data.id
       opener.emit("savedNewAddress", data)
